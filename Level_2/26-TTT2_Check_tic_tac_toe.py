@@ -1,4 +1,4 @@
-# 24) Check TIC TAC TOE (TIC TAC TOE PART 2)
+# 26) Check TIC TAC TOE (TIC TAC TOE PART 2)
 
 # Representation of tic tac toe:
 # game = [[1, 2, 0],
