@@ -107,8 +107,7 @@ def check_letter(wordlist, wordset, wrongletters):
 
 
 def question_play_again():
-    incorrect_response = True
-    while incorrect_response:
+    while True:
         response = input('Do you want to play again?\n'
                          'Introduce yes or no\n').lower()
         if response == "yes":
