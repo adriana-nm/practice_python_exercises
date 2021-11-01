@@ -78,15 +78,15 @@ def select_word():
     return (wlist[random.randint(0, len(wlist))])
 
 
-def print_word(wordlist, worddic):
+def print_word(wordlist, wordset):
     for letters in wordlist:
-        if worddic[letters] == 0:
-            print('_', end='')
-        else:
+        if letters in wordset:
             print(letters, end='')
+        else:
+            print("_", end='')
 
 
-def check_letter(wordlist, worddic, wrongletters):
+def check_letter(wordlist, wordset, wrongletters):
     not_letter = True
     while not_letter:
         newletter = input('Please introduce a letter\n').lower()
@@ -94,10 +94,10 @@ def check_letter(wordlist, worddic, wrongletters):
             if len(newletter) == 1:
                 not_letter = False
     if newletter in wordlist:
-        if worddic[newletter] == 0:
-            worddic[newletter] += 1
-        else:
+        if newletter in wordset:
             print('You already enter letter {}'.format(newletter))
+        else:
+            wordset.add(newletter)
     else:
         if newletter in wrongletters:
             print('You already enter letter {}'.format(newletter))
@@ -121,12 +121,11 @@ def question_play_again():
             print('The answer is not clear')
 
 
-def check_ending(worddic):
-    for v in worddic.values():
-        if v == 0:
+def check_ending(wordlist, wordset):
+    for letter in wordlist:
+        if letter not in wordset:
             return 0
     return 1
-
 
 def game_hangman():
     # Select an aleatory word
@@ -134,23 +133,21 @@ def game_hangman():
     wrongletters = []
     # Create a list to keep the order of the letters in the word
     wordlist = list(word)
-    # Create a dictionary to keep a value (1 if user discover the word, 0 otherwise)
-    worddic = {}
-    for let in word:
-        worddic[let] = 0
+    # Create a set
+    wordset = set()
     # game
     play = True
     while play:
         print('------------------------------------------')
-        check_letter(wordlist, worddic, wrongletters)
-        print_word(wordlist, worddic)
+        check_letter(wordlist, wordset, wrongletters)
+        print_word(wordlist, wordset)
         print('')
         print('')
         print_figure(wrongletters)
         print('')
         print('Wrong letters: {}'.format(wrongletters))
         print(' ')
-        end = check_ending(worddic)
+        end = check_ending(wordlist, wordset)
         if end == 1:
             print('You won the game!')
             print('------------------------------------------')
